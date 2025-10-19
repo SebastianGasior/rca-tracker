@@ -6,6 +6,17 @@ A simple FastAPI backend for recording and viewing incident reports.
 This project demonstrates backend development, testing, and containerisation with Docker.
 
 ---
+## 🌍 Live Demo
+The API is deployed on Azure Container Apps and available at:
+
+[https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io](https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io)
+
+Example endpoints:
+- `/health` → returns API status  
+- `/docs` → interactive API documentation (Swagger UI)
+
+
+---
 
 ## 🚀 Quick Start
 
