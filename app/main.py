@@ -2,11 +2,13 @@
 # IMPORTS
 # -------------------------------------------------------------
 # FastAPI provides the main tools for building an API quickly.
-from fastapi import FastAPI
-# Pydantic provides type checking and data validation for request/response models.
-from pydantic import BaseModel
 # List is a Python typing helper to declare a list of items.
 from typing import List
+
+from fastapi import FastAPI
+
+# Pydantic provides type checking and data validation for request/response models.
+from pydantic import BaseModel
 
 # -------------------------------------------------------------
 # INITIALISE APP
@@ -19,17 +21,19 @@ app = FastAPI(title="RCA Tracker API")
 # DATA MODELS
 # -------------------------------------------------------------
 
+
 # This model defines what the client (frontend or user) must send
 # when creating a new incident.
 class IncidentIn(BaseModel):
-    title: str         # Short name of the incident, e.g. "Database latency"
-    severity: str      # Severity level such as "P1", "P2", or "P3"
+    title: str  # Short name of the incident, e.g. "Database latency"
+    severity: str  # Severity level such as "P1", "P2", or "P3"
     description: str = ""  # Optional description (defaults to empty if not provided)
+
 
 # This model defines what the server returns when sending data back.
 # It includes an extra field 'id' generated automatically.
 class Incident(IncidentIn):
-    id: int            # Unique numeric ID assigned by the server
+    id: int  # Unique numeric ID assigned by the server
 
 
 # -------------------------------------------------------------
@@ -44,6 +48,7 @@ _DB: List[Incident] = []
 # -------------------------------------------------------------
 # ROUTES / ENDPOINTS
 # -------------------------------------------------------------
+
 
 # 1. Health Check
 @app.get("/health")

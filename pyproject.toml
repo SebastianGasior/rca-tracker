@@ -1,0 +1,23 @@
+# -------------------------------
+# Code Formatting and Linting Config
+# -------------------------------
+
+# Black automatically formats Python code so it’s consistent.
+# Here we tell it to keep lines ≤ 100 characters
+# and to assume we’re using Python 3.12.
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+# Ruff is a super-fast linter that finds errors and unused imports.
+# We match Ruff’s line length to Black’s
+# and enable common rule groups:
+#   E = pycodestyle errors (syntax/style)
+#   F = pyflakes (undefined variables, imports)
+#   I = import sorting (keeps imports tidy)
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E","F","I"]
+
