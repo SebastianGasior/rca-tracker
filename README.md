@@ -1,27 +1,49 @@
 # RCA Tracker API
 
-A simple FastAPI backend for recording and viewing incident reports. This repo contains the API, tests, and deployment artifacts used to run the service on Azure Container Apps.
+This project began as a small demo API using FastAPI and evolved into a **fully functional full-stack, production-grade cloud application**.  
+The goal is to continuously enhance the system with new capabilities such as persistence, authentication, and monitoring — all while maintaining scalability, clean design, and DevOps best practices.
 
-Live demo
------------
-The API is deployed on Azure Container Apps and available at:
+---
 
-https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io
+## 🧱 Current Architecture Overview
 
-Key endpoints
-- GET /health → returns API status (JSON)
-- GET /incidents → list all incidents
-- POST /incidents → create a new incident
+| Layer        | Stack                                     | Hosting               |
+| ------------ | ----------------------------------------- | --------------------- |
+| **Frontend** | React (Vite) + Bootstrap                  | Azure Static Web Apps |
+| **Backend**  | FastAPI + Docker                          | Azure Container Apps  |
+| **Database** | MongoDB Atlas (Free Tier)                 | Cloud                 |
+| **CI/CD**    | GitHub Actions + Azure                    | Automatic deployments |
+| **API CORS** | Configured for your Static Web App domain | ✅ Working             |
 
-Database Architecture
--------------------
-The application uses Azure Cosmos DB with MongoDB API for persistent storage, providing:
-- Scalable NoSQL database for storing incident reports
-- MongoDB compatibility for easy development and testing
-- Automatic indexing and fast queries
-- High availability and global distribution capability
 
-The data model stores incidents in a collection with fields for dates, descriptions, and incident details. Local development can use MongoDB directly, while production uses Cosmos DB.
+---
+
+## 🌍 Live Full-Stack Demo
+**Frontend (React + Bootstrap)**  
+https://black-sea-064252b03.3.azurestaticapps.net  
+
+**Backend (FastAPI + MongoDB)**  
+https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io/docs
+
+---
+
+## 🧠 Project Description
+RCA Tracker API powers the backend logic for tracking and managing incident reports.  
+It’s built with FastAPI, containerised with Docker, deployed on Azure Container Apps, and integrates with MongoDB Atlas for persistence.  
+The API supports RESTful operations and serves as the data layer for the RCA Tracker React frontend.
+
+---
+
+## 🚀 Future Enhancements
+- Add authentication and user management (JWT)  
+- Include timestamps and advanced filtering  
+- Integrate monitoring and logging  
+- Improve CI/CD workflows  
+- Extend API with analytics endpoints  
+- Write unit tests and API integration tests
+
+---
+
 
 Quick local setup
 ------------------
