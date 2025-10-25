@@ -1,115 +1,84 @@
----
-`markdown
 # RCA Tracker API
 
-A simple FastAPI backend for recording and viewing incident reports.  
-This project demonstrates backend development, testing, and containerisation with Docker.
+A simple FastAPI backend for recording and viewing incident reports. This repo contains the API, tests, and deployment artifacts used to run the service on Azure Container Apps.
 
----
-## 🌍 Live Demo
+Live demo
+-----------
 The API is deployed on Azure Container Apps and available at:
 
-[https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io](https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io)
+https://rca-tracker.whiteocean-65212696.westeurope.azurecontainerapps.io
 
-Example endpoints:
-- `/health` → returns API status  
-- `/docs` → interactive API documentation (Swagger UI)
+Key endpoints
+- GET /health → returns API status (JSON)
+- GET /incidents → list all incidents
+- POST /incidents → create a new incident
 
+Database Architecture
+-------------------
+The application uses Azure Cosmos DB with MongoDB API for persistent storage, providing:
+- Scalable NoSQL database for storing incident reports
+- MongoDB compatibility for easy development and testing
+- Automatic indexing and fast queries
+- High availability and global distribution capability
 
----
+The data model stores incidents in a collection with fields for dates, descriptions, and incident details. Local development can use MongoDB directly, while production uses Cosmos DB.
 
-## 🚀 Quick Start
+Quick local setup
+------------------
+1. Create a virtual environment and activate it (Windows PowerShell):
 
-### 1. Clone the repository
-bash git clone https://github.com/SebastianGasior/rca-tracker.git cd rca-tracker
-`
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-### 2. Create and activate a virtual environment
-bash # Windows python -m venv .venv .\\.venv\\Scripts\\Activate.ps1 # macOS / Linux python3 -m venv .venv source .venv/bin/activate
-### 3. Install dependencies
-bash pip install -r requirements.txt
-### 4. Run the API
-bash uvicorn app.main:app --reload --port 8000
-Then open:
+2. Start the app (use the venv python):
 
-* [http://localhost:8000/health](http://localhost:8000/health)
-* [http://localhost:8000/docs](http://localhost:8000/docs) for Swagger UI
+```powershell
+C:/Users/sebas/OneDrive/Desktop/rca-tracker/.venv/Scripts/python.exe -m uvicorn app.main:app --reload
+```
 
----
+3. Open http://localhost:8000/health and http://localhost:8000/docs
 
-## Endpoints
+Testing
+-------
+Unit tests and a small end-to-end test are included in the `tests/` directory. To run all tests:
 
-### Health Check
+```powershell
+.../rca-tracker/.venv/Scripts/python.exe -m pytest -v
+```
 
-**GET** `/health`
+Deployment and Secrets
+-----------------------------
+For production, secrets like the MongoDB connection string are stored securely as Container App environment variables, not in source code or `.env` files. This keeps the implementation simple while maintaining security.
 
-* Confirms the API is live
-  Response:
-json {"status": "ok"}
-### Incidents
+To set secrets in Azure Container Apps:
+1. Navigate to your Container App in Azure Portal
+2. Go to Configuration -> Environment Variables
+3. Add your secrets as environment variables (e.g., MONGODB_URL)
 
-**POST** `/incidents`
-json { "title": "Example Incident", "severity": "P2", "description": "Demo issue" }
-**GET** `/incidents`
+Running in Docker
+-----------------
+Build and run locally:
 
-* Returns all incidents currently stored in memory.
+```powershell
+docker build -t rca-tracker .
+docker run -p 8000:8000 rca-tracker
+```
 
----
+Environment variables
+---------------------
+The project reads `MONGODB_URL`, `DATABASE_NAME`, and `COLLECTION_NAME` from environment variables. Locally you can provide these in a `.env` file (do not commit `.env`). In Azure, these are configured as Container App environment variables.
 
-## Running Tests
+Cleaning up test data
+---------------------
+If you want to remove the test incident created during the e2e run, you can either delete it directly from the database or I can add a small admin endpoint to remove test items.
 
-Tests are located in the `tests/` folder.
-bash pytest -v
-Example output:
-tests/test_api.py::test_health PASSED [100%]
----
-
-## Running with Docker
-
-Build and run the container:
-bash docker build -t rca-tracker . docker run -p 8000:8000 rca-tracker
-Then visit [http://localhost:8000/health](http://localhost:8000/health)
-
----
-
-## Environment Variables
-
-Example environment configuration (`.env.example`):
-# Copy to .env and update values if needed # DATABASE_URL=mongodb://user:pass@host/db # SECRET_KEY=changeme # PORT=8000
----
-
-## Project Purpose
-
-This project is part of my software engineering portfolio.
-It demonstrates the ability to design, build, and containerise a Python backend API using FastAPI and Docker.
-It can easily be extended with a database (e.g. SQLite, Postgres, MongoDB) and a React frontend.
-
----
-
-## Tech Stack
-
-* Python 3.12
-* FastAPI (backend framework)
-* Uvicorn (ASGI server)
-* Docker (containerisation)
-* Pydantic (data validation)
-* Pytest (testing)
-* Black + Ruff (formatting and linting)
+Next steps (optional)
+- Add more API endpoints for managing incidents
+- Implement frontend UI
+- Add user authentication if needed
 
 ---
-
-## Licence
-
-MIT License © 2025 Sebastian Gasior
-
----
-
-## Future Enhancements
-
-* Add persistent storage (SQLite or MongoDB)
-* Add user authentication (JWT)
-* Add React frontend
-* Deploy CI/CD pipeline via GitHub Actions
-* Deploy public container to Azure
-
----
+MIT © 2025 Sebastian Gasior
