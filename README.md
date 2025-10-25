@@ -51,14 +51,14 @@ Quick local setup
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
 2. Start the app (use the venv python):
 
 ```powershell
-C:/Users/sebas/OneDrive/Desktop/rca-tracker/.venv/Scripts/python.exe -m uvicorn app.main:app --reload
+.venv/Scripts/python.exe -m uvicorn app.main:app --reload
 ```
 
 3. Open http://localhost:8000/health and http://localhost:8000/docs
@@ -68,7 +68,7 @@ Testing
 Unit tests and a small end-to-end test are included in the `tests/` directory. To run all tests:
 
 ```powershell
-.../rca-tracker/.venv/Scripts/python.exe -m pytest -v
+.venv/Scripts/python.exe -m pytest -v
 ```
 
 Deployment and Secrets
